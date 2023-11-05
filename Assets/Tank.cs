@@ -1,31 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Tank : MonoBehaviour
 {
-
     public float speed = 5;
-    public float RotateSpeed = 90;
-    public string Horiz;
-    public string vertic;
-    public KeyCode shootButton;
+    public float rotateSpeed = 90;
+
+    public string horizontalAxis;
+    public string verticalAxis;
+    public KeyCode shootKey;
+
     public GameObject bullet;
+    public Transform shootPoint;
+
     void Update()
     {
-
-        var ver = Input.GetAxis(vertic);
+        var ver = Input.GetAxis(verticalAxis);
         transform.position += transform.forward * speed * ver * Time.deltaTime;
 
+        var hor = Input.GetAxis(horizontalAxis);
+        transform.Rotate(0,rotateSpeed * Time.deltaTime * hor,0);
 
-
-        var hor = Input.GetAxis(Horiz);
-        transform.Rotate(0, RotateSpeed * Time.deltaTime * hor, 0);
-
-        if (Input.GetKeyDown(shootButton))
+        if (Input.GetKeyDown(shootKey))
         {
-            Instantiate(bullet,transform.position,transform.rotation);
+            print("Shoot");
+            Instantiate(bullet,shootPoint.position,shootPoint.rotation);
         }
-        
     }
 }
